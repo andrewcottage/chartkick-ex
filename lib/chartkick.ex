@@ -24,19 +24,20 @@ defmodule Chartkick do
     height = Keyword.get(options, :height, "300px")
     width = Keyword.get(options, :width, "100%")
     only = Keyword.get(options, :only)
-    defer = Keyword.get(options, :defer, false)
+    defer = Keyword.get(options, :defer, false
+    precision = Keyword.get(options, :precision, 3)
 
     case only do
       :html ->
         chartkick_tag(id, height, width)
 
       :script ->
-        chartkick_script(klass, id, data_source, options, defer)
+        chartkick_script(klass, id, data_source, options, defer, precision)
 
       _ ->
         """
         #{chartkick_tag(id, height, width)}
-        #{chartkick_script(klass, id, data_source, options, defer)}
+        #{chartkick_script(klass, id, data_source, options, defer, precision)}
         """
     end
   end
@@ -52,7 +53,7 @@ defmodule Chartkick do
         end
       %>
     </script>],
-    ~w(klass id data_source options defer)a
+    ~w(klass id data_source options defer precision)a
   )
 
   EEx.function_from_string(
